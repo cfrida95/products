@@ -1,8 +1,9 @@
 <?php
 
 include_once 'Product.php';
-    $pos = new Product();
-    $listofProducts = $pos->getAllProducts();
+session_start();
+$product = new Product();
+$listOfProducts = $product->getAllProducts();
 ?>
 
 
@@ -27,11 +28,11 @@ include_once 'Product.php';
         </tr>
         </thead>
 
-        <?php while ($row = mysqli_fetch_array($listofProducts)) {
+        <?php while ($row = mysqli_fetch_array($listOfProducts)) {
             $id = $row['id'];
             $url_read = "read_product.php?id=" . $row['id'];
-            $url_edit = "edit_product.php?id=" . $row['id'];
-            $url_delete = "delete_product.php?id=" . $row['id'];
+            $url_edit = "edit.php?id=" . $row['id'];
+            $url_delete = "delete.php?id=" . $row['id'];
 
             ?>
 
@@ -41,13 +42,19 @@ include_once 'Product.php';
                 <td><?php echo $row['price']; ?></td>
 
                 <td><a href="<?php echo $url_read; ?> ">View product</a></td>
-                <td><a href="read_product.php?id=" <?php echo $id; ?> ">View product</a></td>
-
                 <td><a href="<?php echo $url_edit; ?> "> Edit </a></td>
                 <td><a href="<?php echo $url_delete ?> "> Delete </a></td>
 
             </tr>
         <?php } ?>
     </table>
+
+    <?php
+    if (isset($_SESSION['message'])) {
+        echo $_SESSION['message'];
+    }
+    session_unset();
+    ?>
+
 </body>
 </html>
