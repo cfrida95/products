@@ -1,18 +1,15 @@
 <?php
 
-include_once 'database_config.php';
-
-// Attempt select query execution
-$sql = "SELECT * FROM products";
-$results = mysqli_query($conn, $sql);
-//// Close connection
-//mysqli_close($link);
-
+include_once 'ProductOperations.php';
+session_start();
+$product = new ProductOperations();
+$listOfProducts = $product->getAllProducts();
 ?>
+
 
 <html>
 <head>
-    <title>Homepage</title>
+    <title>Products list</title>
 </head>
 
 <body>
@@ -31,10 +28,12 @@ $results = mysqli_query($conn, $sql);
         </tr>
         </thead>
 
-        <?php while ($row = mysqli_fetch_array($results)) {
-            $url_read = "read_product.php?id=" . $row['id'];
-            $url_edit = "edit_product.php?id=" . $row['id'];
-            $url_delete = "delete_product.php?id=" . $row['id'];
+        <?php while ($row = mysqli_fetch_array($listOfProducts)) {
+            $id = $row['id'];
+            $url_read = "read.php?id=" . $row['id'];
+            $url_edit = "edit.php?id=" . $row['id'];
+            $url_delete = "delete.php?id=" . $row['id'];
+
             ?>
 
             <tr>
@@ -48,10 +47,16 @@ $results = mysqli_query($conn, $sql);
 
             </tr>
         <?php } ?>
-
-
-
-
     </table>
+    <br>
+    <a href="index.html">Home</a>
+    <br>
+    <?php
+    if (isset($_SESSION['message'])) {
+        echo $_SESSION['message'];
+    }
+    session_unset();
+    ?>
+
 </body>
 </html>

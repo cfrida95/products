@@ -1,34 +1,47 @@
 <?php
 
-//Including the database connection file
-include_once 'database_config.php';
+include_once 'ProductOperations.php';
+session_start();
+$product = new ProductOperations();
+$product->addNewProduct();
 
-function test_input($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
+?>
 
-$name = '';
-$quantity = '';
-$price = '';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new product</title>
+    <style>
+        .input {
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div style="margin: auto; text-align: center">
+    <h1>Add a new product</h1>
 
-if (isset($_POST['submit'])) {
-    $name = test_input($_POST['name']);
-    $quantity = test_input($_POST['quantity']);
-    $price = test_input($_POST['price']);
+    <form action="create.php" method='POST'>
+        <div class="input">
+            <label>Name</label>
+            <input type="text" name="name" value="" required>
+        </div>
+        <div class="input">
+            <label>Quantity</label>
+            <input type="text" name="quantity" value="" required>
+        </div>
 
-    // attempt insert query execution
-    $sql = "INSERT INTO products (name, quantity, price) VALUES ('$name', '$quantity', '$price')";
-    if (mysqli_query($conn, $sql)) {
-        echo "Record added successfully.";
-    } else {
-        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
-    }
+        <div class="input">
+            <label>Price</label>
+            <input type="text" name="price" value="" required>
+        </div>
 
-    // close connection
-    mysqli_close($conn);
+        <input type="submit" name="submit" value="Submit"/>
 
-}
+    </form>
+
+</div>
+</body>
+</html>

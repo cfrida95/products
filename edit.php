@@ -1,9 +1,10 @@
 <?php
-include_once 'Product.php';
+include_once 'ProductOperations.php';
+
 session_start();
-$product = new Product();
+
+$product = new ProductOperations();
 $editProduct = $product->editProduct();
-//print_r($editProduct);
 
 //The function returns an array with 3 values (name,quantity,price)
 $name = $editProduct[0];
@@ -28,11 +29,11 @@ $price = $editProduct[2];
             <td><input type="text" name="name" value="<?php echo $name ?>"></td>
         </tr>
         <tr>
-            <td>Age</td>
+            <td>Quantity</td>
             <td><input type="text" name="quantity" value="<?php echo $quantity; ?>"></td>
         </tr>
         <tr>
-            <td>Email</td>
+            <td>Price</td>
             <td><input type="text" name="price" value="<?php echo $price; ?>"></td>
         </tr>
         <tr>
@@ -42,6 +43,6 @@ $price = $editProduct[2];
     </table>
 </form>
 
-<a href="../index.html">Home</a>
+<a href="index.html">Home</a>
 </body>
 </html>
